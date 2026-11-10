@@ -44,13 +44,39 @@ jobs:
         run: mvn -B test -Dtest='**/unitarias/*Test'
 
   # ---------------------------------------------------------------------------
+  # CI: pruebas BDD
+  # ---------------------------------------------------------------------------
+  # Ejecuta los escenarios escritos en Gherkin (src/test/resources/features). Son pruebas
+  # funcionales: verifican el comportamiento contra el requisito, con frases que
+  # Producción puede leer. Corre en su propia máquina, en paralelo con las pruebas
+  # unitarias: un job no ve lo que instaló otro, por eso repite la preparación.
+  pruebas-bdd:
+    name: Pruebas BDD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v6
+
+      - name: Instalar Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      # RunCucumberTest ejecuta con el motor de Cucumber todos los .feature de
+      # src/test/resources/features, con los pasos del paquete pronosticos.bdd.
+      - name: Ejecutar escenarios BDD
+        run: mvn -B test -Dtest=RunCucumberTest
+
+  # ---------------------------------------------------------------------------
   # CD: despliegue simulado
   # ---------------------------------------------------------------------------
   despliegue:
     name: Despliegue (simulado)
     # needs: el despliegue solo corre si todos los jobs listados terminaron bien.
     # Si una prueba falla, este job no se ejecuta y nada llega a producción.
-    needs: [pruebas-unitarias]
+    needs: [pruebas-unitarias, pruebas-bdd]
     # Solo se despliega lo que entra a main, nunca desde un pull request.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
