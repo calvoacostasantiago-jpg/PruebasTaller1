@@ -16,6 +16,9 @@ public class CalculadoraPronosticos {
         if (!Double.isFinite(alfa) || alfa < 0 || alfa > 1) {
             throw new IllegalArgumentException("Alfa debe estar entre 0 y 1");
         }
+        if (serie == null || serie.isEmpty()) {
+            throw new IllegalArgumentException("Se necesita al menos un periodo");
+        }
         double resultado = serie.getFirst();
         for (int i = 1; i < serie.size(); i++) {
             resultado = resultado + alfa * (serie.get(i) - resultado);
