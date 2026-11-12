@@ -33,4 +33,13 @@ class MseTest {
 
         assertEquals("Las series deben tener el mismo número de periodos", error.getMessage());
     }
+
+    @Test
+    @DisplayName("Rechaza series vacias porque el promedio no esta definido")
+    void rechazaSeriesVacias() {
+        IllegalArgumentException error = assertThrows(IllegalArgumentException.class,
+                () -> calculadora.mse(List.of(), List.of()));
+
+        assertEquals("Se necesita al menos un periodo", error.getMessage());
+    }
 }
