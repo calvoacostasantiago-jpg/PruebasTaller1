@@ -47,19 +47,21 @@ public class CalculadoraPronosticos {
         return sumar(ultimos) / ventana;
     }
 
+    /**
+     * Error cuadratico medio (MSE), expresado en unidades al cuadrado.
+     *
+     * <p>Elevar cada diferencia al cuadrado da mas peso a los errores grandes.
+     * Se usan los valores recibidos sin redondear durante el calculo.
+     */
     public double mse(List<Double> real, List<Double> pronostico) {
-        if (real.size() != pronostico.size()) {
-            throw new IllegalArgumentException("Las series deben tener el mismo número de periodos");
-        }
-        if (real.isEmpty()) {
-            throw new IllegalArgumentException("Se necesita al menos un periodo");
-        }
-        double suma = 0;
+        validarSeries(real, pronostico);
+
+        double sumaErroresCuadrados = 0;
         for (int i = 0; i < real.size(); i++) {
             double diferencia = real.get(i) - pronostico.get(i);
-            suma += diferencia * diferencia;
+            sumaErroresCuadrados += diferencia * diferencia;
         }
-        return suma / real.size();
+        return sumaErroresCuadrados / real.size();
     }
 
     /** Error absoluto medio (MAD): promedio de las diferencias absolutas, en unidades. */
