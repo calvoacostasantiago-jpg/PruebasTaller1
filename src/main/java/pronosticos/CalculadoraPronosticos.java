@@ -54,7 +54,12 @@ public class CalculadoraPronosticos {
         if (real.isEmpty()) {
             throw new IllegalArgumentException("Se necesita al menos un periodo");
         }
-        return 143.1489;
+        double suma = 0;
+        for (int i = 0; i < real.size(); i++) {
+            double diferencia = real.get(i) - pronostico.get(i);
+            suma += diferencia * diferencia;
+        }
+        return suma / real.size();
     }
 
     /** Error absoluto medio (MAD): promedio de las diferencias absolutas, en unidades. */
