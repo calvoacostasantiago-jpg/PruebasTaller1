@@ -1,11 +1,14 @@
 package pronosticos.unitarias;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import pronosticos.CalculadoraPronosticos;
 
@@ -32,5 +35,15 @@ class SuavizacionExponencialTest {
     @DisplayName("Con alfa uno usa la ultima demanda")
     void conAlfaUnoUsaLaUltimaDemanda() {
         assertEquals(150.0, new CalculadoraPronosticos().suavizacionExponencial(SERIE, 1.0), TOLERANCIA);
+    }
+
+    @ParameterizedTest(name = "alfa = {0}")
+    @ValueSource(doubles = {-0.1, 1.5, Double.NaN, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY})
+    @DisplayName("Rechaza un alfa fuera del intervalo de cero a uno")
+    void rechazaUnAlfaFueraDelIntervalo(double alfa) {
+        IllegalArgumentException error = assertThrows(IllegalArgumentException.class,
+                () -> new CalculadoraPronosticos().suavizacionExponencial(SERIE, alfa));
+
+        assertEquals("Alfa debe estar entre 0 y 1", error.getMessage());
     }
 }
