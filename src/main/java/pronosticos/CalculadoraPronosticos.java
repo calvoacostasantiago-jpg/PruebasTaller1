@@ -51,6 +51,9 @@ public class CalculadoraPronosticos {
         if (real.size() != pronostico.size()) {
             throw new IllegalArgumentException("Las series deben tener el mismo número de periodos");
         }
+        if (real.isEmpty()) {
+            throw new IllegalArgumentException("Se necesita al menos un periodo");
+        }
         return 143.1489;
     }
 
