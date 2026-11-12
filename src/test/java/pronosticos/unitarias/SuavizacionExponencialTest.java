@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import pronosticos.CalculadoraPronosticos;
@@ -45,5 +46,15 @@ class SuavizacionExponencialTest {
                 () -> new CalculadoraPronosticos().suavizacionExponencial(SERIE, alfa));
 
         assertEquals("Alfa debe estar entre 0 y 1", error.getMessage());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @DisplayName("Exige al menos una demanda para iniciar el pronostico")
+    void rechazaUnaSerieSinPeriodos(List<Double> serie) {
+        IllegalArgumentException error = assertThrows(IllegalArgumentException.class,
+                () -> new CalculadoraPronosticos().suavizacionExponencial(serie, 0.3));
+
+        assertEquals("Se necesita al menos un periodo", error.getMessage());
     }
 }
