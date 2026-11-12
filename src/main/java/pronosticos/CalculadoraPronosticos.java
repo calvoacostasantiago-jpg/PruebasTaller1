@@ -12,18 +12,23 @@ import java.util.List;
  */
 public class CalculadoraPronosticos {
 
+    /**
+     * Pronostica el siguiente periodo con suavizacion exponencial simple.
+     *
+     * <p>Se inicia con la primera demanda y se aplica F = F + alfa * (D - F)
+     * a cada demanda posterior, sin redondear los resultados intermedios.
+     */
     public double suavizacionExponencial(List<Double> serie, double alfa) {
-        if (!Double.isFinite(alfa) || alfa < 0 || alfa > 1) {
-            throw new IllegalArgumentException("Alfa debe estar entre 0 y 1");
-        }
+        validarAlfa(alfa);
         if (serie == null || serie.isEmpty()) {
             throw new IllegalArgumentException("Se necesita al menos un periodo");
         }
-        double resultado = serie.getFirst();
+
+        double pronostico = serie.getFirst();
         for (int i = 1; i < serie.size(); i++) {
-            resultado = resultado + alfa * (serie.get(i) - resultado);
+            pronostico += alfa * (serie.get(i) - pronostico);
         }
-        return resultado;
+        return pronostico;
     }
 
     /**
@@ -91,6 +96,12 @@ public class CalculadoraPronosticos {
             throw new IllegalArgumentException("El umbral debe estar entre 0 y 100");
         }
         return errorPorcentual >= umbral;
+    }
+
+    private void validarAlfa(double alfa) {
+        if (!Double.isFinite(alfa) || alfa < 0 || alfa > 1) {
+            throw new IllegalArgumentException("Alfa debe estar entre 0 y 1");
+        }
     }
 
     private void validarSeries(List<Double> real, List<Double> pronostico) {
