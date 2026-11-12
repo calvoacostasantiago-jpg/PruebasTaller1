@@ -21,4 +21,10 @@ class SuavizacionExponencialTest {
 
         assertEquals(137.5546, resultado, TOLERANCIA);
     }
+
+    @Test
+    @DisplayName("Con alfa cero conserva la primera demanda")
+    void conAlfaCeroConservaLaPrimeraDemanda() {
+        assertEquals(120.0, new CalculadoraPronosticos().suavizacionExponencial(SERIE, 0.0), TOLERANCIA);
+    }
 }
