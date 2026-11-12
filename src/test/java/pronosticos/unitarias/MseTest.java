@@ -1,6 +1,7 @@
 package pronosticos.unitarias;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
@@ -22,5 +23,14 @@ class MseTest {
 
         // (205.3489 + 18.7489 + 205.3489) / 3 = 143.1489.
         assertEquals(143.1489, resultado, TOLERANCIA);
+    }
+
+    @Test
+    @DisplayName("Rechaza series con distinta cantidad de periodos")
+    void rechazaSeriesDeDistintaLongitud() {
+        IllegalArgumentException error = assertThrows(IllegalArgumentException.class,
+                () -> calculadora.mse(List.of(10.0, 20.0), List.of(10.0)));
+
+        assertEquals("Las series deben tener el mismo número de periodos", error.getMessage());
     }
 }
