@@ -13,10 +13,11 @@ import java.util.List;
 public class CalculadoraPronosticos {
 
     public double suavizacionExponencial(List<Double> serie, double alfa) {
-        if (alfa == 0) {
-            return serie.getFirst();
+        double resultado = serie.getFirst();
+        for (int i = 1; i < serie.size(); i++) {
+            resultado = resultado + alfa * (serie.get(i) - resultado);
         }
-        return 137.5546;
+        return resultado;
     }
 
     /**
