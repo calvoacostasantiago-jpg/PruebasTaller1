@@ -33,6 +33,9 @@
         <!-- Una variable por declaración. -->
         <module name="MultipleVariableDeclarations"/>
 
+        <!-- Cada instruccion ocupa su propia linea para facilitar su revision. -->
+        <module name="OneStatementPerLine"/>
+
         <!-- Convenciones de nombres de Java. -->
         <module name="MethodName"/>
         <module name="LocalVariableName"/>

@@ -1,0 +1,28 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< curso.pruebas:pronosticos-java >-------------------
+[INFO] Building pronosticos-java 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- checkstyle:3.6.0:check (default-cli) @ pronosticos-java ---
+[INFO] Comenzando auditoría...
+[ERROR] D:\Users\PCSHOP-COL\Desktop\pruebas\pronosticos-java\src\main\java\pronosticos\CalculadoraPronosticos.java:88:9: Sólo se permite una definición de variable por línea. [MultipleVariableDeclarations]
+[ERROR] D:\Users\PCSHOP-COL\Desktop\pruebas\pronosticos-java\src\main\java\pronosticos\CalculadoraPronosticos.java:88:56: Sólo una declaración por línea permitido. [OneStatementPerLine]
+Auditoría concluida.
+[INFO] There are 2 errors reported by Checkstyle 13.3.0 with config/checkstyle.xml ruleset.
+[ERROR] src\main\java\pronosticos\CalculadoraPronosticos.java:[88,9] (coding) MultipleVariableDeclarations: Sólo se permite una definición de variable por línea.
+[ERROR] src\main\java\pronosticos\CalculadoraPronosticos.java:[88,56] (coding) OneStatementPerLine: Sólo una declaración por línea permitido.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.874 s
+[INFO] Finished at: 2026-11-11T23:11:15-05:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-checkstyle-plugin:3.6.0:check (default-cli) on project pronosticos-java: You have 2 Checkstyle violations. -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
