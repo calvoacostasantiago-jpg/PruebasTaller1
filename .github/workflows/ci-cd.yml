@@ -18,6 +18,23 @@ on:
     branches: [main]
 
 jobs:
+  analisis-estatico:
+    name: Análisis estático
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v6
+
+      - name: Instalar Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Revisar el código con Checkstyle
+        run: mvn -B checkstyle:check
+
   # ---------------------------------------------------------------------------
   # CI: pruebas unitarias
   # ---------------------------------------------------------------------------
@@ -69,6 +86,23 @@ jobs:
       - name: Ejecutar escenarios BDD
         run: mvn -B test -Dtest=RunCucumberTest
 
+  cobertura:
+    name: Cobertura
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v6
+
+      - name: Instalar Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Verificar cobertura de líneas y ramas
+        run: mvn -B verify
+
   # ---------------------------------------------------------------------------
   # CD: despliegue simulado
   # ---------------------------------------------------------------------------
@@ -76,7 +110,7 @@ jobs:
     name: Despliegue (simulado)
     # needs: el despliegue solo corre si todos los jobs listados terminaron bien.
     # Si una prueba falla, este job no se ejecuta y nada llega a producción.
-    needs: [pruebas-unitarias, pruebas-bdd]
+    needs: [analisis-estatico, pruebas-unitarias, pruebas-bdd, cobertura]
     # Solo se despliega lo que entra a main, nunca desde un pull request.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
