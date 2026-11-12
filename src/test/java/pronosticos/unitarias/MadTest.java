@@ -51,4 +51,13 @@ class MadTest {
     void rechazaSeriesVacias() {
         assertThrows(IllegalArgumentException.class, () -> calculadora.mad(List.of(), List.of()));
     }
+
+    @Test
+    @DisplayName("Un exceso y un defecto del pronostico no cancelan sus errores")
+    void noCancelaErroresDeSignosOpuestos() {
+        double resultado = calculadora.mad(List.of(10.0, 20.0), List.of(12.0, 18.0));
+
+        // (|-2| + |2|) / 2 = 2, aunque el promedio de los errores con signo sea cero.
+        assertEquals(2.0, resultado, TOLERANCIA);
+    }
 }

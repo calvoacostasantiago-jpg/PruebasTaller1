@@ -70,4 +70,18 @@ class PromedioMovilTest {
     void rechazaUnaVentanaQueNoEsPositiva(int ventana) {
         assertThrows(IllegalArgumentException.class, () -> calculadora.promedioMovil(SERIE, ventana));
     }
+
+    @Test
+    @DisplayName("Ignora un valor antiguo aunque sea mucho mayor que la ventana")
+    void ignoraLosValoresFueraDeLaVentana() {
+        double resultado = calculadora.promedioMovil(List.of(1000000.0, 10.0, 20.0, 30.0), 3);
+
+        assertEquals(20.0, resultado, TOLERANCIA);
+    }
+
+    @Test
+    @DisplayName("Conserva los decimales al promediar la ventana")
+    void conservaLosDecimales() {
+        assertEquals(3.9, calculadora.promedioMovil(List.of(2.1, 3.3, 4.5), 2), TOLERANCIA);
+    }
 }

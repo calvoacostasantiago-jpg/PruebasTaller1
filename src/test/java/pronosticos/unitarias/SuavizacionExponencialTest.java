@@ -57,4 +57,10 @@ class SuavizacionExponencialTest {
 
         assertEquals("Se necesita al menos un periodo", error.getMessage());
     }
+
+    @Test
+    @DisplayName("Una serie de un periodo conserva su unica demanda")
+    void conservaLaDemandaDeUnSoloPeriodo() {
+        assertEquals(42.5, new CalculadoraPronosticos().suavizacionExponencial(List.of(42.5), 0.3), TOLERANCIA);
+    }
 }
