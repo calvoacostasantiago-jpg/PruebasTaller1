@@ -42,4 +42,10 @@ class MseTest {
 
         assertEquals("Se necesita al menos un periodo", error.getMessage());
     }
+
+    @Test
+    @DisplayName("El error cuadratico es cero cuando el pronostico es exacto")
+    void esCeroCuandoElPronosticoEsExacto() {
+        assertEquals(0.0, calculadora.mse(List.of(100.0, 200.0), List.of(100.0, 200.0)), TOLERANCIA);
+    }
 }
