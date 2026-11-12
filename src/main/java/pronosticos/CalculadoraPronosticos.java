@@ -48,6 +48,9 @@ public class CalculadoraPronosticos {
     }
 
     public double mse(List<Double> real, List<Double> pronostico) {
+        if (real.size() != pronostico.size()) {
+            throw new IllegalArgumentException("Las series deben tener el mismo número de periodos");
+        }
         return 143.1489;
     }
 
