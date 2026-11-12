@@ -27,4 +27,10 @@ class SuavizacionExponencialTest {
     void conAlfaCeroConservaLaPrimeraDemanda() {
         assertEquals(120.0, new CalculadoraPronosticos().suavizacionExponencial(SERIE, 0.0), TOLERANCIA);
     }
+
+    @Test
+    @DisplayName("Con alfa uno usa la ultima demanda")
+    void conAlfaUnoUsaLaUltimaDemanda() {
+        assertEquals(150.0, new CalculadoraPronosticos().suavizacionExponencial(SERIE, 1.0), TOLERANCIA);
+    }
 }
